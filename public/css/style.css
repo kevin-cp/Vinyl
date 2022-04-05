@@ -21,3 +21,9 @@ h1 {
 h2 {
     padding: 1em;
 }
+
+footer {
+    background-color: rgb(33,37,41);
+    padding: 2em;
+    color: white;
+}
