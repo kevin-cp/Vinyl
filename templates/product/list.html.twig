@@ -10,9 +10,10 @@
     {% for product in products %}
     <div class="col-md-6 lg-shadow pb-5">
       <a href="{{ path('app_details', { id: product.id }) }}">{{
-        product.album_name
+        product.albumName
       }}</a>
       <h5>{{ product.author }}</h5>
+      <img src="/uploads/{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
       <p>{{ product.price }}</p>
     </div>
     {% endfor %}
