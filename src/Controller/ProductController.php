@@ -9,6 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
+
+
+    /**
+     * @Route ("/list", name="app_list")
+     */
+    public function list(ProductRepository $repo): Response 
+    {
+        $products = $repo->findAll([], ['release_date'=>'DESC']);
+        return $this->render('product/list.html.twig', compact('products'));
+    }
+
+    
      /**
      * @Route ("/list/details/{id}", name="app_details")
      */
