@@ -1,6 +1,10 @@
-{% extends 'base.html.twig' %} {% block main %}
-<h1>Tous nos vinyles à la vente</h1>
+{% extends 'base.html.twig' %} 
 
+{% block title %}Products{% endblock %}
+
+{% block main %}
+
+<h1>Tous nos vinyles à la vente</h1>
 <div class="container">
   <div class="row">
     {% for product in products %}
