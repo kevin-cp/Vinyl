@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col cover">
+                <img src="{{ product.cover }}" class="img-fluid" alt="...">
+            </div>
+            <div class="col">
+                <h1>{{ product.albumName }}</h1>
+                <h3>{{ product.price }}€</h3>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

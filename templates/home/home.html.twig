@@ -40,33 +40,22 @@
 
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
             <div class="col">
                 <div class="card">
-                    <img src="{{ asset('img/1.jpg') }}" class="card-img-top" alt="...">
+                    <img src="{{ product.cover }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">{{ product.albumName }}</h5>
+                        <p>{{ product.country }}, {{ product.price }}€</p>
+                        <p>Genre: {{ product.genre.name }}</p>
+                        {% if product.description %}
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        {% endif %}
+                        <a href="{{ path('app_details', {'id': product.id }) }}">Détails</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="{{ asset('img/2.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="{{ asset('img/3.jpg') }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

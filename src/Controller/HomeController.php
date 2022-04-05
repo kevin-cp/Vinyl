@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +10,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route ("/home", name="app_home")
+     * @Route ("/", name="app_home")
      */
-    public function home(): Response
+    public function home(ProductRepository $repo): Response
     {
-        return $this->render('home/home.html.twig');
+        $products = $repo->findAll();
+        return $this->render('home/home.html.twig', compact('products'));
+    }
+
+    /**
+     * @Route ("/list/details/{id}", name="app_details")
+     */
+    public function details($id, ProductRepository $repo) :Response {
+        $product = $repo->find($id);
+        if(!$product)
+            throw $this->createNotFoundException();
+        return $this->render('product/details.html.twig', compact('product'));
     }
 }

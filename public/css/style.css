@@ -26,4 +26,7 @@ footer {
     background-color: rgb(33,37,41);
     padding: 2em;
     color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
