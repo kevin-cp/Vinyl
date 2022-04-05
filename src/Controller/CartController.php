@@ -20,6 +20,11 @@ class CartController extends AbstractController
         $cartContent = [];
 
         foreach ($cart->get() as $id => $quantity) {
+            $product_object = $repo->find($id);
+            if(!$product_object) {
+                $this->delete($id, $cart);
+                continue;
+            }
             $cartContent[] = [
                 'product' =>  $repo->find($id),
                 'quantity' => $quantity,
@@ -55,6 +60,15 @@ class CartController extends AbstractController
     public function delete($id, Cart $cart): Response
     {
         $cart->delete($id);
+        return $this->redirectToRoute('app_cart');
+    }
+
+    /**
+     * @Route ("/cart/decrease/{id}", name="app_decrease_cart")
+     */
+    public function decrease($id, Cart $cart): Response
+    {
+        $cart->decrease($id);
         return $this->redirectToRoute('app_cart');
     }
 }
