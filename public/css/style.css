@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 2em;
+}
+
+.card {
+    margin-top: 1em;
+}
+
+.button {
+    text-align: center;
+    padding: 3em;
+}
+
+h2 {
+    padding: 1em;
+}
