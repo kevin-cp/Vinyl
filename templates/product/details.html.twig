@@ -9,6 +9,7 @@
             <div class="col">
                 <h1>{{ product.albumName }}</h1>
                 <h3>{{ product.price }}€</h3>
+                <a href="{{  path('app_add_cart', {'id': product.id}) }}" type="button" class="btn btn-primary">Ajouter au panier</a>
             </div>
         </div>
 
