@@ -17,6 +17,7 @@ class Cart
         $this->entityManager = $entityManager;
     }
 
+
     public function add($id)
     {
         $cart = $this->session->get('cart', []);
