@@ -59,7 +59,7 @@
     <div>
         <b>Nombre de produit :</b> {{ cart | length }} <br>
         <b>Total :</b> {{ total }}€ <br>
-        <a href="" class="btn btn-success">Valider mon panier</a>
+        <a href="{{ path(('app_order')) }}" class="btn btn-success">Valider mon panier</a>
     </div>
         {% else %}
             <hr>
