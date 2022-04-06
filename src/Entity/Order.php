@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +19,12 @@ class Order
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -39,19 +47,14 @@ class Order
     private $delivery;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=OrderDetails::class, mappedBy="myOrder")
      */
-    private $reference;
+    private $orderDetails;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $stripeSessionId;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $state;
+    public function __construct()
+    {
+        $this->orderDetails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -118,38 +121,32 @@ class Order
         return $this;
     }
 
-    public function getReference(): ?string
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetails(): Collection
     {
-        return $this->reference;
+        return $this->orderDetails;
     }
 
-    public function setReference(string $reference): self
+    public function addOrderDetail(OrderDetails $orderDetail): self
     {
-        $this->reference = $reference;
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails[] = $orderDetail;
+            $orderDetail->setMyOrder($this);
+        }
 
         return $this;
     }
 
-    public function getStripeSessionId(): ?string
+    public function removeOrderDetail(OrderDetails $orderDetail): self
     {
-        return $this->stripeSessionId;
-    }
-
-    public function setStripeSessionId(string $stripeSessionId): self
-    {
-        $this->stripeSessionId = $stripeSessionId;
-
-        return $this;
-    }
-
-    public function getState(): ?int
-    {
-        return $this->state;
-    }
-
-    public function setState(int $state): self
-    {
-        $this->state = $state;
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getMyOrder() === $this) {
+                $orderDetail->setMyOrder(null);
+            }
+        }
 
         return $this;
     }
