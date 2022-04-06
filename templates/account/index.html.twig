@@ -3,7 +3,11 @@
 {% block title %}Account{% endblock %}
 
 {% block main %}
-<h1>Bienvenue sur votre compte {{ app.user.email }}</h1>
+<h1>Bienvenue sur votre compte {{ app.user.firstname }} !</h1>
+
+<div>
+    <a href="{{ path('app_account_personal') }}">Mes informations personnelles</a>
+</div>
 
 <div>
     <a href=""></a>
