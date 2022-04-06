@@ -17,22 +17,10 @@ class CartController extends AbstractController
      */
     public function cart(Cart $cart, ProductRepository $repo): Response
     {
-        $cartContent = [];
 
-        foreach ($cart->get() as $id => $quantity) {
-            $product_object = $repo->find($id);
-            if(!$product_object) {
-                $this->delete($id, $cart);
-                continue;
-            }
-            $cartContent[] = [
-                'product' =>  $repo->find($id),
-                'quantity' => $quantity,
-            ];
-        }
 
           return $this->render('cart/index.html.twig', [
-              'cart' => $cartContent
+              'cart' => $cart->getFull()
           ]);
     }
 
