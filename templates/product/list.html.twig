@@ -13,7 +13,7 @@
         product.albumName
       }}</a>
       <h5>{{ product.author }}</h5>
-      <img src="/uploads/{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
+      <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
       <p>{{ product.price }}</p>
     </div>
     {% endfor %}

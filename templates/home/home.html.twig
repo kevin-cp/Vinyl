@@ -46,7 +46,7 @@
                     <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.albumName }}</h5>
-                        <p>{{ product.country }}, {{ product.price }}€</p>
+                        <p>{{ product.country }}, {{ product.price  }}€</p>
                         <p>Genre: {{ product.genre.name }}</p>
                         {% if product.description %}
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
