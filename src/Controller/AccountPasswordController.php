@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\PasswordType;
 
 class AccountPasswordController extends AbstractController
 {
@@ -16,3 +17,4 @@ class AccountPasswordController extends AbstractController
         return $this->render('account/password.html.twig');
     }
 }
+ 
