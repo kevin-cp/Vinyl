@@ -15,4 +15,14 @@ class AccountController extends AbstractController
     {
         return $this->render('account/index.html.twig');
     }
+
+    /**
+     * @Route("/personal-account", name="app_account_personal")
+     */
+    public function informations(): Response
+    {
+        return $this->render('account/informations.html.twig');
+    }
+
+
 }
