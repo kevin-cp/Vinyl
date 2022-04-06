@@ -12,7 +12,7 @@ main %}
 
 
     {% for address in app.user.addresses %}
-    <div class="card-body bg-secondary">
+    <div class="card-body bg-secondary mb-2">
         <h5 class="card-title">{{ address.name }}</h5>
         <p class="card-text">{{ address.address }} <br />
         {{ address.postal }} - {{ address.city }} - {{ address.country }}</p>
