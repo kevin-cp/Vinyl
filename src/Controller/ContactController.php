@@ -22,7 +22,7 @@ class ContactController extends AbstractController
             $this->addFlash('notice', 'Merci de nous avoir contacté. Notre équipe va vous répondre dans les meilleurs délais.');
 
         }
-        return $this->render('contact/index.html.twig', [
+        return $this->render('contact/carrier.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CarrierController!{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Choisir la livraison</h1>
+        <div class="row">
+            <div class="col">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <p>Récapitulatif de ma commande</p>
+                        <p>Retrouvez le récapitulatif de vos produits</p>
+                    </div>
+                    <div class="order-summary">
+                        {% for key, product in cart %}
+                            <div class="row text-center{% if key > 0 %}mt-2{% endif %}">
+                                <div class="col mb-3 my-auto"><img src="{{ asset('uploads/') }}{{ product.product.cover }}" alt="{{ product.product.AlbumName }}" height="75px"><br /></div>
+                                <div class="col mb-3 my-auto"> x {{ product.quantity }}</div>
+                                <div class="col mb-3 my-auto">{{ product.product.albumName }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                {% for index, carrier in carriers %}
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ index }}" aria-expanded="false" aria-controls="collapseThree">
+                                    {{carrier.name}}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ index }}" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {% if(carrier.price == 0) %}
+                                        <strong>Gratuit</strong>
+                                    {% else %}
+                                        <strong>{{ carrier.price }}€</strong>
+                                    {% endif %}
+                                    <p>{{ carrier.description }}</p>
+                                    <p><strong>Livraison estimée : {{ carrier.deliveryTime }}</strong></p>
+                                    <a href="" class="btn btn-success">Choisir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
