@@ -17,7 +17,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/personal-account", name="app_account_personal")
+     * @Route("/account/personal", name="app_account_personal")
      */
     public function informations(): Response
     {
