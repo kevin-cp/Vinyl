@@ -8,8 +8,6 @@ use App\Entity\OrderDetails;
 use App\Form\OrderType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Stripe\Stripe;
-use Stripe\Checkout\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +21,8 @@ class OrderController extends AbstractController
     public function index(Cart $cart, Request $request): Response
     {
         $form = $this->createForm(OrderType::class, null, [
-            'user' => $this->getUser()]);
+            'user' => $this->getUser()
+        ]);
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
@@ -36,52 +35,55 @@ class OrderController extends AbstractController
      */
     public function summary(Cart $cart, Request $request, EntityManagerInterface $em): Response
     {
-    
+
         $form = $this->createForm(OrderType::class, null, [
-            'user' => $this->getUser()]);
+            'user' => $this->getUser()
+        ]);
 
         $form->handleRequest($request);
 
-                $date = new DateTimeImmutable();
-                $carriers = $form->get('carrier')->getData();
-                $delivery = $form->get('addresses')->getData();
-                $delivery_content = $delivery->getName();
-                $delivery_content .= '<br />' .$delivery->getPhone();
-                $delivery_content .= '<br />' .$delivery->getAddress();
-                $delivery_content .= '<br />' .$delivery->getPostal().''.$delivery->getCity();
-                $delivery_content .= '<br />' .$delivery->getCountry();
+        $date = new DateTimeImmutable();
+        $carriers = $form->get('carrier')->getData();
+        $delivery = $form->get('addresses')->getData();
+        $delivery_content = $delivery->getFirstName().' '.$delivery->getLastName();
+        $delivery_content .= '<br />' . $delivery->getPhone();
+        $delivery_content .= '<br />' . $delivery->getAddress();
+        $delivery_content .= '<br />' . $delivery->getPostal() . '' . $delivery->getCity();
+        $delivery_content .= '<br />' . $delivery->getCountry();
 
 
-            if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $order = new Order();
-                $order->setUser($this->getUser());
-                $order->setCreatedAt($date);
-                $order->setCarrierName($carriers->getName());
-                $order->setCarrierPrice($carriers->getPrice());
-                $order->setDelivery($delivery_content);
-                $em->persist($order);
+            $order = new Order();
+            $order->setUser($this->getUser());
+            $order->setCreatedAt($date);
+            $order->setCarrierName($carriers->getName());
+            $order->setCarrierPrice($carriers->getPrice());
+            $order->setDelivery($delivery_content);
+            $em->persist($order);
 
-                foreach ($cart->getFull() as $product) {
-                    $orderDetails = new OrderDetails();
-                    $orderDetails->setMyOrder($order);
-                    $orderDetails->setProduct($product['product']->getAlbumName());
-                    $orderDetails->setQuantity($product['quantity']);
-                    $orderDetails->setPrice($product['product']->getPrice());
-                    $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
-                    $em->persist($orderDetails);
-                }
+            
 
-                $em->flush();
+            foreach ($cart->getFull() as $product) {
+                $orderDetails = new OrderDetails();
+                $orderDetails->setMyOrder($order);
+                $orderDetails->setProduct($product['product']->getAlbumName());
+                $orderDetails->setQuantity($product['quantity']);
+                $orderDetails->setPrice($product['product']->getPrice());
+                $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
+                $em->persist($orderDetails);
 
+            }
 
-                return $this->render('order/order_summary.html.twig', [
+            $em->flush();
+
+            return $this->render('order/order_summary.html.twig', [
                 'form' => $form->createView(),
                 'cart' => $cart->getFull(),
-                'delivery' => $delivery_content,
-                    'order' => $order
-                ]); 
-            }
+                'carrier' => $carriers,
+                'delivery' => $delivery_content
+            ]);
+        }
 
         return $this->redirectToRoute('app_cart');
     }
