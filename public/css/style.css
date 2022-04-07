@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
 
+/* base et home */
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #121E26;
     color: white;
     height: 100vh;
     align-content: center;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card {
@@ -45,6 +53,7 @@ footer {
     height: 60px;
 }
 
+/* page détails */
 .details {
     margin: 2em;
     height: 100%;
@@ -58,4 +67,10 @@ footer {
 .albumDetails {
     text-align: center;
     padding: 2em;
+}
+
+/* page list */
+.list {
+    margin: 2em;
+    padding-bottom: 4em;
 }
