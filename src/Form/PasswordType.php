@@ -28,34 +28,34 @@ class PasswordType extends AbstractType
             ->add('email', EmailType::class, [
                 'disabled' => true
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mon mot de passe actuel',
-                'attr' => [
-                    'placeholder' => 'Veuillez renseigner votre mot de passe'
-                ]
-            ])
-            ->add('new_password', RepeatedType::class, [
-                'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques',
-                'mapped' => false,
-                'constraints' => new Length([
-                   'min' => 6,
-                   'max' => 30,
-               ]), 
-                'label' => 'Mon nouveau mot de passe', 
-                'required' => true, 
-                'first_options' => [ 
-                    'label' => 'Nouveau Mot de passe',
-                    'attr' => [
-                        'placeholder' => 'Merci de saisir votre nouveau mot de passe.'
-                    ]
-                   ], 
-                'second_options' => [
-                    'label' => 'Confirmez votre nouveau mot de passe',
-                    'attr' => [
-                       'placeholder' => 'Merci de confirmer votre nouveau mot de passe.'
-                       ]
-                    ] 
-           ])
+//            ->add('password', PasswordType::class, [
+//                'label' => 'Mon mot de passe actuel',
+//                'attr' => [
+//                    'placeholder' => 'Veuillez renseigner votre mot de passe'
+//                ]
+//            ])
+//            ->add('new_password', RepeatedType::class, [
+//                'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques',
+//                'mapped' => false,
+//                'constraints' => new Length([
+//                   'min' => 6,
+//                   'max' => 30,
+//               ]),
+//                'label' => 'Mon nouveau mot de passe',
+//                'required' => true,
+//                'first_options' => [
+//                    'label' => 'Nouveau Mot de passe',
+//                    'attr' => [
+//                        'placeholder' => 'Merci de saisir votre nouveau mot de passe.'
+//                    ]
+//                   ],
+//                'second_options' => [
+//                    'label' => 'Confirmez votre nouveau mot de passe',
+//                    'attr' => [
+//                       'placeholder' => 'Merci de confirmer votre nouveau mot de passe.'
+//                       ]
+//                    ]
+//           ])
            ->add('submit', SubmitType::class, [ 
             'label' => "Mettre à jour"
         ])
