@@ -6,18 +6,27 @@
 
 <h1>Tous nos vinyles à la vente</h1>
 <div class="container">
-  <div class="row">
+  <p>Trier par : <a href="{{ path('app_list_asc') }}">Prix croissant</a> <a href="{{ path('app_list_desc') }}">Prix décroissant</a></p>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for product in products %}
-    <div class="col-md-6 lg-shadow pb-5">
-      <a href="{{ path('app_details', { id: product.id }) }}">{{
-        product.albumName
-      }}</a>
-      <h5>{{ product.author }}</h5>
-      <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
-      <p>{{ (product.price / 100) |number_format(2, ',', '.') }} €</p>
-    </div>
+      <div class="col">
+        <div class="card">
+          <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.albumName }}</h5>
+            <p>{{ product.country }}, {{ (product.price /100) |number_format(2, ',', '.')  }}€</p>
+            <p>Genre: {{ product.genre.name }}</p>
+            {% if product.description %}
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            {% endif %}
+            <a href="{{ path('app_details', {'id': product.id }) }}">Détails</a>
+            <a href="{{  path('app_add_cart', {'id': product.id}) }}" type="button" class="btn btn-primary btn-sm">Ajouter au panier</a>
+          </div>
+        </div>
+      </div>
     {% endfor %}
   </div>
 </div>
 
 {% endblock %}
+

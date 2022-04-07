@@ -3,13 +3,15 @@
 {% block title %}Details products{% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="row">
+    <div class="container details">
+        <div class="row details">
             <div class="col cover">
                 <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
             </div>
-            <div class="col">
-                <h1>{{ product.albumName }}</h1>
+            <div class="col albumDetails">
+                <h1 class="titleDetails">{{ product.albumName }}</h1>
+                <h2>{{ product.author }}</h2>
+                <p>Genre : {{ product.genre }}</p>
                 <h3>{{ (product.price / 100) |number_format(2, ',', '.') }}€</h3>
                 <a href="{{  path('app_add_cart', {'id': product.id}) }}" type="button" class="btn btn-primary">Ajouter au panier</a>
             </div>

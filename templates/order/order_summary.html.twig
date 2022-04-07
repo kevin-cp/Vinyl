@@ -8,14 +8,14 @@
 
     <div class="row">
         <div class="col">
-            Mon Adresse :
+            <h2>Mon Adresse :</h2>
                 <p>{{ delivery | replace({'[br]' : '<br />'})|raw }}</p>
             <hr>
-            Mon Transporteur:
+            <h2>Mon Transporteur:</h2>
 
                 <div>
                     <p>{{ order.carrierName }}</p>
-                    <p>{{ (order.carrierPrice / 100) |number_format(2, ',', '.') }}€</p>
+                    <p>Prix : {{ (order.carrierPrice / 100) |number_format(2, ',', '.') }}€</p>
                 </div>
 
         </div>

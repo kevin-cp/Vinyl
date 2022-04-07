@@ -16,7 +16,25 @@ class ProductController extends AbstractController
      */
     public function list(ProductRepository $repo): Response 
     {
-        $products = $repo->findAll([], ['release_date'=>'DESC']);
+        $products = $repo->findAll([], ['name'=>'DESC']);
+        return $this->render('product/list.html.twig', compact('products'));
+    }
+
+    /**
+     * @Route ("/list/price/desc", name="app_list_desc")
+     */
+    public function listByPriceDesc(ProductRepository $repo): Response
+    {
+        $products = $repo->findBy([], ['price' => 'DESC']);
+        return $this->render('product/list.html.twig', compact('products'));
+    }
+
+    /**
+     * @Route ("/list/price/asc", name="app_list_asc")
+     */
+    public function listByPriceASC(ProductRepository $repo): Response
+    {
+        $products = $repo->findBy([], ['price' => 'ASC']);
         return $this->render('product/list.html.twig', compact('products'));
     }
 
