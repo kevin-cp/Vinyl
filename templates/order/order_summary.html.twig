@@ -26,12 +26,12 @@
             {% set sousTotal = 0 %}
 
             {% for p in cart %}
-                {% set sousTotal =  sousTotal + (p.product.price * p.quantity)/100 %}
+                {% set sousTotal =  sousTotal + (p.product.price * p.quantity) %}
                 {% set total = sousTotal + order.carrierPrice %}
             <div class="row">
                 <div class="col"><img src="{{ asset('uploads/') }}{{ p.product.cover }}" alt="album cover" height="75px"></div>
                 <div class="col"><strong>{{ p.product.albumName }}</strong> de {{ p.product.author }}</div>
-                <div class="col">{{ p.product.price }}€</div>
+                <div class="col">{{ (p.product.price /100) |number_format(2, ',', '.') }}€</div>
             </div>
                 <div class="row">x{{ p.quantity }}</div>
             {% endfor %}

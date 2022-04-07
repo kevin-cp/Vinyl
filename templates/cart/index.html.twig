@@ -40,7 +40,7 @@
                 </a>
             </td>
             <td>{{ (product.product.price / 100) |number_format(2, ',', '.')}} €</td>
-            <td>{{ (product.product.price * product.quantity / 100) |number_format(2, ',', '.') }}</td>
+            <td>{{ (product.product.price * product.quantity / 100) |number_format(2, ',', '.') }} €</td>
             <td>
                 <a href="{{ path('app_delete_cart', {'id': product.product.id}) }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
