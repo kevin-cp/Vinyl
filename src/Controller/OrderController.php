@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Order;
+use App\Entity\OrderDetails;
 use App\Form\OrderType;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,21 +32,54 @@ class OrderController extends AbstractController
     /**
      * @Route("/order/summary", name="app_order_summary")
      */
-    public function summary(Cart $cart, Request $request): Response
+    public function summary(Cart $cart, Request $request, EntityManagerInterface $em): Response
     {
+    
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser()]);
 
         $form->handleRequest($request);
 
+                $date = new DateTimeImmutable();
+                $carriers = $form->get('carrier')->getData();
+                $delivery = $form->get('addresses')->getData();
+                $delivery_content = $delivery->getName().''.$delivery->getLastname();
+                $delivery_content .= '<br />' .$delivery->getPhone();
+                $delivery_content .= '<br />' .$delivery->getAddress();
+                $delivery_content .= '<br />' .$delivery->getPostal().''.$delivery->getCity();
+                $delivery_content .= '<br />' .$delivery->getCountry();
+
+                $order = new Order();
+                $order->setUser($this->getUser());
+                $order->setCreatedAt($date);
+                $order->setCarrierName($carriers->getName());
+                $order->setCarrierPrice($carriers->getPrice());
+                $order->setDelivery($delivery_content);
+
+                foreach ($cart->getFull() as $product) {
+                    $orderDetails = new OrderDetails();
+                    $orderDetails->setMyOrder($order);
+                    $orderDetails->setProduct($product['product']->getAlbumName());
+                    $orderDetails->setQuantity($product['quantity']);
+                    $orderDetails->setPrice($product['product']->getPrice());
+                    $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
+
+                }
+
+
             if($form->isSubmitted() && $form->isValid()) {
-                $this->addFlash('notice', 'Votre panier est validé.');
-                //return $this->redirectToRoute('app_account');
+
+                $em->persist($order);
+                $em->persist($orderDetails);
+                $em->flush();
+
+                return $this->render('order/order_summary.html.twig', [
+                'form' => $form->createView(),
+                'cart' => $cart->getFull(),
+                'delivery' => $delivery_content
+                ]); 
             }
 
-        return $this->render('order/index.html.twig', [
-            'form' => $form->createView(),
-            'cart' => $cart->getFull()
-        ]);
+        return $this->redirectToRoute('app_cart');
     }
 }
