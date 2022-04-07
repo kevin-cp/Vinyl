@@ -37,8 +37,8 @@ class Carrier
      */
     private $delivery_time;
 
-    public function __toString() : String {
-        return $this->name;
+    public function __toString(){
+        return $this->getName().'[br]'.$this->getDescription().'[br]'.(number_format($this->getPrice() / 100)). ' €';
     }
 
     public function getId(): ?int
