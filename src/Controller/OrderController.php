@@ -45,7 +45,7 @@ class OrderController extends AbstractController
                 $date = new DateTimeImmutable();
                 $carriers = $form->get('carrier')->getData();
                 $delivery = $form->get('addresses')->getData();
-                $delivery_content = $delivery->getFirstname().''.$delivery->getLastname();
+                $delivery_content = $delivery->getName();
                 $delivery_content .= '<br />' .$delivery->getPhone();
                 $delivery_content .= '<br />' .$delivery->getAddress();
                 $delivery_content .= '<br />' .$delivery->getPostal().''.$delivery->getCity();
