@@ -8,6 +8,8 @@ use App\Entity\OrderDetails;
 use App\Form\OrderType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,6 +73,7 @@ class OrderController extends AbstractController
                 }
 
                 $em->flush();
+
 
                 return $this->render('order/order_summary.html.twig', [
                 'form' => $form->createView(),
