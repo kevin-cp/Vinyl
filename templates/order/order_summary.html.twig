@@ -15,7 +15,7 @@
 
                 <div>
                     <p>{{ order.carrierName }}</p>
-                    <p>{{ order.carrierPrice }}€</p>
+                    <p>{{ (order.carrierPrice / 100) |number_format(2, ',', '.') }}€</p>
                 </div>
 
         </div>
@@ -26,7 +26,7 @@
             {% set sousTotal = 0 %}
 
             {% for p in cart %}
-                {% set sousTotal =  sousTotal + (p.product.price * p.quantity) %}
+                {% set sousTotal =  sousTotal + (p.product.price * p.quantity)/100 %}
                 {% set total = sousTotal + order.carrierPrice %}
             <div class="row">
                 <div class="col"><img src="{{ asset('uploads/') }}{{ p.product.cover }}" alt="album cover" height="75px"></div>
@@ -36,11 +36,11 @@
                 <div class="row">x{{ p.quantity }}</div>
             {% endfor %}
             <div class="row">
-                <p><strong>Sous total:</strong> {{ sousTotal }}€</p>
-                <p><strong>Livraison:</strong>{{ order.carrierPrice }}€</p>
-                <p><strong>Total:</strong>{{ total }}€</p>
+                <p><strong>Sous total:</strong> {{ (sousTotal / 100) |number_format(2, ',', '.') }}€</p>
+                <p><strong>Livraison:</strong>{{ (order.carrierPrice / 100) |number_format(2, ',', '.') }}€</p>
+                <p><strong>Total:</strong>{{ (total/100) |number_format(2, ',', '.') }}€</p>
             </div>
-            <a href="" class="btn btn-success">Payer {{ total}}€</a>
+            <a href="" class="btn btn-success">Payer {{ (total / 100) |number_format(2, ',', '.') }}€</a>
         </div>
     </div>
 
