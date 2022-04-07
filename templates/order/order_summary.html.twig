@@ -45,3 +45,32 @@
     </div>
 
 {% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript">
+        var stripe = Stripe('pk_test_51K6F9OItVNcg60jK9EJOM2Gb0m9Dv6FJ21Mcpy5FeQwf1ANBqcuFue8gDRi8jNeyFqlM7RtDxOBVz3rg5ixuqlZ000mBqt6yDY');
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.addEventListener("click", function () {
+            fetch("/commande/create-session", {
+                method: "POST",
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(session) {
+                        return stripe.redirectToCheckout({ sessionId: session.id });
+                })
+                .then(function(result) {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error:", error);
+                });
+
+        });
+    </script>
+
+{% endblock %}
