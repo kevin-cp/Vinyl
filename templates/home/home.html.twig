@@ -3,7 +3,7 @@
 {% block title %}Vinyl{% endblock %}
 
 {% block main %}
-    <h1>The Vinyl Project</h1>
+    <h1>The <span class="v">V</span>inyl Project</h1>
 
     <div class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -46,7 +46,7 @@
                     <img src="{{ asset('uploads/') }}{{ product.cover }}" class="card-img-top" alt="{{ product.albumName }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.albumName }}</h5>
-                        <p>{{ product.country }}, {{ product.price  }}€</p>
+                        <p>{{ product.country }}, {{(product.price /100) |number_format(2, ',', '.')  }}€</p>
                         <p>Genre: {{ product.genre.name }}</p>
                         {% if product.description %}
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -60,6 +60,6 @@
     </div>
 
     <div class="container button">
-        <button type="button" class="btn btn-primary">Voir plus</button>
+        <a href="{{ path('app_list') }}" type="button" class="btn btn-primary">Voir plus</a>
     </div>
 {% endblock %}

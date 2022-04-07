@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block title %}Contactez-nous !{% endblock %}
 
@@ -9,7 +10,11 @@
 {% endfor %}
 
 <div class="row">
-    <div class="col-md-8">{{ form(form) }}</div>
+    <div class="col-md-8">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
     <div class="col-md-4 pl-5">
         <h3>Vinyl</h3>
         <hr>
