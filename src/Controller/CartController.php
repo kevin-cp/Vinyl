@@ -17,8 +17,6 @@ class CartController extends AbstractController
      */
     public function cart(Cart $cart, ProductRepository $repo): Response
     {
-
-
           return $this->render('cart/index.html.twig', [
               'cart' => $cart->getFull()
           ]);

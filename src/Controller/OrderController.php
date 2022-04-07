@@ -48,7 +48,9 @@ class OrderController extends AbstractController
                 $delivery_content .= '<br />' .$delivery->getAddress();
                 $delivery_content .= '<br />' .$delivery->getPostal().''.$delivery->getCity();
                 $delivery_content .= '<br />' .$delivery->getCountry();
-                
+
+
+            if($form->isSubmitted() && $form->isValid()) {
 
                 $order = new Order();
                 $order->setUser($this->getUser());
@@ -56,6 +58,7 @@ class OrderController extends AbstractController
                 $order->setCarrierName($carriers->getName());
                 $order->setCarrierPrice($carriers->getPrice());
                 $order->setDelivery($delivery_content);
+                $em->persist($order);
 
                 foreach ($cart->getFull() as $product) {
                     $orderDetails = new OrderDetails();
@@ -64,14 +67,9 @@ class OrderController extends AbstractController
                     $orderDetails->setQuantity($product['quantity']);
                     $orderDetails->setPrice($product['product']->getPrice());
                     $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
-                    dd($product);
+                    $em->persist($orderDetails);
                 }
 
-
-            if($form->isSubmitted() && $form->isValid()) {
-
-                $em->persist($order);
-                $em->persist($orderDetails);
                 $em->flush();
 
                 return $this->render('order/order_summary.html.twig', [
