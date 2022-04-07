@@ -64,7 +64,7 @@ class OrderController extends AbstractController
                     $orderDetails->setQuantity($product['quantity']);
                     $orderDetails->setPrice($product['product']->getPrice());
                     $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
-
+                    dd($product);
                 }
 
 
