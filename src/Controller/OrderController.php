@@ -76,7 +76,8 @@ class OrderController extends AbstractController
                 return $this->render('order/order_summary.html.twig', [
                 'form' => $form->createView(),
                 'cart' => $cart->getFull(),
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+                    'order' => $order
                 ]); 
             }
 

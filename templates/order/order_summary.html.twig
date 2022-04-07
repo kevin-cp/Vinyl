@@ -6,4 +6,43 @@
 
 <h1>Récapitulatif de ma commande </h1>
 
+    <div class="row">
+        <div class="col">
+            Mon Adresse :
+                <p>{{ delivery | replace({'[br]' : '<br />'})|raw }}</p>
+            <hr>
+            Mon Transporteur:
+
+                <div>
+                    <p>{{ order.carrierName }}</p>
+                    <p>{{ order.carrierPrice }}€</p>
+                </div>
+
+        </div>
+        <div class="col">
+            Produits :
+
+            {% set total = 0 %}
+            {% set sousTotal = 0 %}
+
+            {% for p in cart %}
+                {% set sousTotal =  sousTotal + (p.product.price * p.quantity) %}
+                {% set total = sousTotal + order.carrierPrice %}
+            <div class="row">
+                <div class="col"><img src="{{ asset('uploads/') }}{{ p.product.cover }}" alt="album cover" height="75px"></div>
+                <div class="col"><strong>{{ p.product.albumName }}</strong> de {{ p.product.author }}</div>
+                <div class="col">{{ p.product.price }}€</div>
+            </div>
+                <div class="row">x{{ p.quantity }}</div>
+            {% endfor %}
+            <div class="row">
+                <p><strong>Sous total:</strong> {{ sousTotal }}€</p>
+                <p><strong>Livraison:</strong>{{ order.carrierPrice }}€</p>
+                <p><strong>Total:</strong>{{ total }}€</p>
+            </div>
+            <a href="" class="btn btn-success">Payer {{ total}}€</a>
+        </div>
+{% dump(cart) %}
+    </div>
+
 {% endblock %}
