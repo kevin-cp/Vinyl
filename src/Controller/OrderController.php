@@ -55,6 +55,8 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $order = new Order();
+            $reference = $date->format('dmY').'-'.uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreatedAt($date);
             $order->setCarrierName($carriers->getName());
@@ -81,7 +83,8 @@ class OrderController extends AbstractController
                 'form' => $form->createView(),
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+                'reference' => $order->getReference()
             ]);
         }
 

@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Entity\Order;
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session as CheckoutSession;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,26 +16,46 @@ use Symfony\Component\Routing\Annotation\Route;
 class StripeController extends AbstractController
 {
     /**
-     * @Route("/stripe", name="app_stripe")
+     * @Route("/stripe/{reference}", name="app_stripe")
      */
-    public function index(Cart $cart)
+    public function index(EntityManagerInterface $em, Cart $cart, $reference)
     {
         $products_for_stripe = [];
         $YOUR_DOMAIN = 'http://127.0.0.1:8000';
 
-        foreach ($cart->getFull() as $product) {
+        $order = $em->getRepository(Order::class)->findOneBy(['reference' => $reference]);
+
+        if (!$order) {
+            new JsonResponse(['error' => 'order']);
+        }
+
+        foreach ($order->getOrderDetails()->getValues() as $product) {
+            $product_object = $em->getRepository(Product::class)->findOneBy(['author' => $product->getProduct()]);
             $products_for_stripe[]= [
                 'price_data' => [
                     'currency' => 'eur',
-                    'unit_amount' => $product['product']->getPrice(),
+                    'unit_amount' => $product->getPrice(),
                     'product_data' => [
-                        'name' => $product['product']->getAlbumName(),
-                        'images' => [$YOUR_DOMAIN."/uploads/".$product['product']->getCover()],
+                        'name' => $product->getProduct(),
+                       
                     ],
                 ],
-                'quantity' => $product['quantity'],
+                'quantity' => $product->getQuantity(),
             ];
         }
+
+        $products_for_stripe[]= [
+            'price_data' => [
+                'currency' => 'eur',
+                'unit_amount' => $order->getCarrierPrice(),
+                'product_data' => [
+                    'name' => $order->getCarrierName(),
+                    'images' => [$YOUR_DOMAIN],
+                ],
+            ],
+            'quantity' => $product->getQuantity(),
+        ];
+
         
         Stripe::setApiKey($this->getParameter('stripeSK'));
 
@@ -42,9 +65,11 @@ class StripeController extends AbstractController
                 $products_for_stripe
             ],
             'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . '/success.html',
-            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+            'success_url' => $YOUR_DOMAIN . '/stripe/thanks/{CHECKOUT_SESSION_ID}',
+            'cancel_url' => $YOUR_DOMAIN . '/stripe/error/{CHECKOUT_SESSION_ID}',
         ]);
+
+
 
         $response = new JsonResponse(['id' => $checkout_session->id]);
         return $response;

@@ -38,7 +38,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=300, nullable=true)
+     * @ORM\Column(type="string", length=300)
      */
     private $cover;
 
