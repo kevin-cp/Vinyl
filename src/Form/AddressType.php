@@ -44,7 +44,6 @@ class AddressType extends AbstractType
                 'label' =>'Votre code postal',
                 'attr' => [
                     'placeholder' => 'Entrez votre code postal',
-                    'pattern' => '/^[0-9]{5}$/', 'maxlength' => 5
                 ]
             ])
             ->add('city', TextType::class, [
