@@ -61,6 +61,11 @@ class Order
      */
     private $stripeSessionId;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPaid;
+
     public function getTotal(){
 
         $total = null;
@@ -194,6 +199,18 @@ class Order
     public function setStripeSessionId(?string $stripeSessionId): self
     {
         $this->stripeSessionId = $stripeSessionId;
+
+        return $this;
+    }
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(?bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
 
         return $this;
     }

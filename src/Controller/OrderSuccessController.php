@@ -18,11 +18,18 @@ class OrderSuccessController extends AbstractController
     {
         $order =$this->$em->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
 
-        if (!$order) {
+        if (!$order || $order->getUser() != $this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
 
+        if(!$order->getIsPaid()) {
+            $order->setIsPaid(1);
+            $this->$em->flush();
+        }
+
         dd($order);
-        return $this->render('order_success/index.html.twig');
+        return $this->render('order_success/index.html.twig', [
+            'order' => $order
+        ]);
     }
 }
