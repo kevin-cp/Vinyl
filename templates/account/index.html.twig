@@ -1,22 +1,20 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Account{% endblock %}
-
-{% block main %}
+{% extends 'base.html.twig' %} {% block title %}Account{% endblock %} {% block
+main %}
 <h1>Bienvenue sur votre compte {{ app.user.firstname }} !</h1>
+{% if is_granted('ROLE_ADMIN') %}
+<div class="row mx-auto" id="account-row">
+  <a href="/admin">Vous êtes un administrateur</a><br />
+</div>
+{% endif %}
 
 <div>
-    <a href="{{ path('app_account_personal') }}">Mes informations personnelles</a>
+  <a href="{{ path('app_account_personal') }}">Mes informations personnelles</a>
 </div>
 
 <div>
-    <a href="{{ path('app_account_address') }}">Mes adresses</a>
-    
+  <a href="{{ path('app_account_address') }}">Mes adresses</a>
 </div>
 
-<div>
-    Mes commandes
-</div>
-
+<div>Mes commandes</div>
 
 {% endblock %}
