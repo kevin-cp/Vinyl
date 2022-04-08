@@ -1,4 +1,6 @@
-{% extends 'base.html.twig' %} 
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block title %}Adress add{% endblock %} 
 
@@ -7,7 +9,7 @@
 <hr>
 
 {{ form_start(form)}}
-    {{ form_row(form)}}
+    {{ form_row(form.phone)}}
 {{ form_end(form)}}
 
 <a href="{{ path('app_account') }}">Retourner sur mon profil</a>
