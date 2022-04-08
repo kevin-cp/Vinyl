@@ -43,7 +43,8 @@ class AddressType extends AbstractType
             ->add('postal', TextType::class, [
                 'label' =>'Votre code postal',
                 'attr' => [
-                    'placeholder' => 'Entrez votre code postal'
+                    'placeholder' => 'Entrez votre code postal',
+                    'pattern' => '/^[0-9]{5}$/', 'maxlength' => 5
                 ]
             ])
             ->add('city', TextType::class, [
@@ -61,7 +62,8 @@ class AddressType extends AbstractType
             ->add('phone', TelType::class, [
                 'label' =>'Votre téléphone',
                 'attr' => [
-                    'placeholder' => 'Entrez votre téléphone'
+                    'placeholder' => 'Entrez votre téléphone',
+                    'pattern' => '/^[0-9]{10}$/', 'maxlength' => 10
                 ]
             ])
             ->add('submit', SubmitType::class, [
