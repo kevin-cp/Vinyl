@@ -45,6 +45,26 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    // Find/search articles by title/content
+    public function findProductByName(string $query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('p.album_name', ':query'),
+                        $qb->expr()->like('p.author', ':query'),
+                    ),
+
+                )
+            )
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Product[] Returns an array of Product objects
