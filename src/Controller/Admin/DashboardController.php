@@ -31,7 +31,7 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('Vinyl');
     }
-
+ 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
