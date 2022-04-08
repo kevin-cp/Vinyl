@@ -24,5 +24,4 @@ class AccountController extends AbstractController
         return $this->render('account/informations.html.twig');
     }
 
-
 }
