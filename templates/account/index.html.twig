@@ -1,5 +1,10 @@
-{% extends 'base.html.twig' %} {% block title %}Account{% endblock %} {% block
-main %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block main %}
+
+
 <h1>Bienvenue sur votre compte {{ app.user.firstname }} !</h1>
 {% if is_granted('ROLE_ADMIN') %}
 <div class="row mx-auto" id="account-row">
