@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderSuccessController extends AbstractController
 {
     /**
-     * @Route("/stripe/thanks/{CHECKOUT_SESSION_ID}", name="app_order_success")
+     * @Route("/stripe/thanks/{stripeSessionId}", name="app_order_success")
      */
     public function index(EntityManagerInterface $em, $stripeSessionId)
     {
-        $order =$this->$em->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
+        $order = $em->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
 
         if (!$order || $order->getUser() != $this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -24,10 +24,9 @@ class OrderSuccessController extends AbstractController
 
         if(!$order->getIsPaid()) {
             $order->setIsPaid(1);
-            $this->$em->flush();
+            $em->flush();
         }
 
-        dd($order);
         return $this->render('order_success/index.html.twig', [
             'order' => $order
         ]);
