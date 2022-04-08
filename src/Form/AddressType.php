@@ -63,7 +63,6 @@ class AddressType extends AbstractType
                 'label' =>'Votre téléphone',
                 'attr' => [
                     'placeholder' => 'Entrez votre téléphone',
-                    'pattern' => '/^[0-9]{10}$/', 'maxlength' => 10
                 ]
             ])
             ->add('submit', SubmitType::class, [
