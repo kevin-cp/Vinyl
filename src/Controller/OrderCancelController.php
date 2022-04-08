@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OrderSuccessController extends AbstractController
+class OrderCancelController extends AbstractController
 {
     /**
-     * @Route("/stripe/thanks/{stripeSessionId}", name="app_order_success")
+     * @Route("/stripe/error/{stripeSessionId}", name="app_order_error")
      */
     public function index(EntityManagerInterface $em, $stripeSessionId)
     {
@@ -20,12 +20,7 @@ class OrderSuccessController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        if(!$order->getIsPaid()) {
-            $order->setIsPaid(1);
-            $em->flush();
-        }
-
-        return $this->render('order_success/index.html.twig', [
+        return $this->render('order_cancel/index.html.twig', [
             'order' => $order
         ]);
     }
